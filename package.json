@@ -25,6 +25,12 @@
   },
   "homepage": "https://github.com/yairodriguez/AngularJS#readme",
   "devDependencies": {
+    "ghooks": "^2.0.0",
     "jshint": "^2.9.4"
+  },
+  "config": {
+    "ghooks": {
+      "pre-commit": "npm t"
+    }
   }
 }
