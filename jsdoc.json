@@ -1,0 +1,36 @@
+{
+  "tags": {
+    "allowUnknownTags": true,
+    "dictionaries": [ "jsdoc", "closure" ]
+  },
+  "source": {
+    "include": [ "src" ],
+    "exclude": [ "tests", "node_modules" ],
+    "includePattern": ".+\\.js(doc|x)?$",
+    "excludePattern": "(^|\\/|\\\\)_"
+  },
+  "plugins": ["plugins/markdown"],
+  "templates": {
+    "cleverLinks": false,
+    "monospaceLinks": false,
+    "applicationName": "AngularJS",
+    "disqus": "",
+    "googleAnalytics": "",
+    "openGraph": {
+      "title": "AngularJS",
+      "type": "website",
+      "image": "",
+      "site_name": "",
+      "url": ""
+    },
+    "meta": {
+      "title": "AngularJS",
+      "description": "Own implementation of AngularJS in ES6.",
+      "keyword": "Algorithms, ES6, TDD, Data Structures, CI"
+    },
+    "linenums": true
+  },
+  "opts": {
+    "destination": "docs"
+  }
+}
