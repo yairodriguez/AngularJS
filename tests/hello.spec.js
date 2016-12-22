@@ -1,4 +1,4 @@
-var sayHello = require('../src/index');
+import sayHello from '../src/index';
 
 describe('Hello', function () {
   it('says hello', function () {
