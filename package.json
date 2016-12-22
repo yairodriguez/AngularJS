@@ -1,0 +1,30 @@
+{
+  "name": "angularjs",
+  "version": "1.0.0",
+  "description": "Own implementatio of AngularJS, using Extreme Test–First and ES6.",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "test": "jshint src tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yairodriguez/AngularJS.git"
+  },
+  "keywords": [
+    "AngularJS",
+    "Extreme Test–First",
+    "TDD",
+    "ES6",
+    "CI."
+  ],
+  "author": "Yair Rodriguez <@imyairodriguez>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yairodriguez/AngularJS/issues"
+  },
+  "homepage": "https://github.com/yairodriguez/AngularJS#readme",
+  "devDependencies": {
+    "jshint": "^2.9.4"
+  }
+}
