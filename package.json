@@ -1,0 +1,59 @@
+{
+  "name": "angularjs",
+  "version": "1.0.0",
+  "description": "Own implementatio of AngularJS, using Extreme Test–First and ES6.",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "predocs": "rimraf docs",
+    "docs": "jsdoc -t template -c jsdoc.json -R README.md -r",
+    "lint": "jshint src tests",
+    "pretest": "npm run lint",
+    "test": "karma start --single-run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yairodriguez/AngularJS.git"
+  },
+  "keywords": [
+    "AngularJS",
+    "Extreme Test–First",
+    "TDD",
+    "ES6",
+    "CI."
+  ],
+  "author": "Yair Rodriguez <@imyairodriguez>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yairodriguez/AngularJS/issues"
+  },
+  "homepage": "https://github.com/yairodriguez/AngularJS#readme",
+  "devDependencies": {
+    "babel-core": "^6.21.0",
+    "babel-preset-es2015": "^6.18.0",
+    "babelify": "^7.3.0",
+    "browserify": "^13.1.1",
+    "browserify-istanbul": "^2.0.0",
+    "ghooks": "^2.0.0",
+    "isparta": "^4.0.0",
+    "istanbul": "github:gotwarlost/istanbul#source-map",
+    "jasmine-core": "^2.5.2",
+    "jsdoc": "^3.4.3",
+    "jshint": "^2.9.4",
+    "karma": "^1.3.0",
+    "karma-browserify": "^5.1.0",
+    "karma-coverage": "github:douglasduteil/karma-coverage#next",
+    "karma-jasmine": "^1.1.0",
+    "karma-jshint-preprocessor": "0.0.6",
+    "karma-phantomjs-launcher": "^1.0.2",
+    "phantomjs-prebuilt": "^2.1.14",
+    "rimraf": "^2.5.4",
+    "sinon": "^1.17.6",
+    "watchify": "^3.8.0"
+  },
+  "config": {
+    "ghooks": {
+      "pre-commit": "npm t"
+    }
+  }
+}
