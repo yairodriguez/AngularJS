@@ -76,4 +76,13 @@ describe('Scope :: $digest', () => {
     scope.$digest();
     expect(oldValueGiven).toBe(123);
   });
+
+  it('may have watchers that omit the listener function', () => {
+    const watchExpression = jasmine.createSpy().and.returnValue('something');
+
+    scope.$watch(watchExpression);
+    scope.$digest();
+
+    expect(watchExpression).toHaveBeenCalled();
+  });
 });
