@@ -34,13 +34,13 @@ export default class Scope {
   }
 
   /**
-   * @name Scope#uniqueReference
+   * @name Scope#uuid
    * @function
    * @description Function used to initialize the `last` attribute to something
    *     we can guarantee to be unique, so that’s different from anything a
    *     watch function might return, including `undefined`.
    */
-  uniqueReference () {}
+  uuid () {}
 
   /**
    * @name Scope#$watch
@@ -77,7 +77,7 @@ export default class Scope {
     const watcher = {
       watchExpression,
       listener,
-      last: this.uniqueReference
+      last: this.uuid
     };
 
     this.$$watchers.push(watcher);
@@ -119,7 +119,10 @@ export default class Scope {
 
       if (newValue !== oldValue) {
         watcher.last = newValue;
-        watcher.listener(newValue, oldValue, this);
+        watcher.listener(
+          newValue,
+          (oldValue === this.uuid ? newValue : oldValue),
+          this);
       }
     });
   }
