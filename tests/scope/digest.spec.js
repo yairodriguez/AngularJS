@@ -85,4 +85,34 @@ describe('Scope :: $digest', () => {
 
     expect(watchExpression).toHaveBeenCalled();
   });
+
+  it('triggers chained watchers in the same digest', () => {
+    scope.name = 'Jair';
+
+    scope.$watch(
+      scope => scope.nameUpper,
+      (newValue, oldValue, scope) => {
+        if (newValue) {
+          scope.initial = `${newValue.substring(0, 1)}.`;
+        }
+      }
+    );
+
+    scope.$watch(
+      scope => scope.name,
+      (newValue, oldValue, scope) => {
+        if (newValue) {
+          scope.nameUpper = newValue.toUpperCase();
+        }
+      }
+    );
+
+    scope.$digest();
+    expect(scope.initial).toBe('J.');
+
+    scope.name = 'Genius';
+
+    scope.$digest();
+    expect(scope.initial).toBe('G.');
+  });
 });
