@@ -16,4 +16,14 @@ describe('Scope :: $digest', () => {
 
     expect(listener).toHaveBeenCalled();
   });
+
+  it('calls the watch function with the scope as the argument', () => {
+    const watchExpression = jasmine.createSpy();
+    const listener        = () => {};
+
+    scope.$watch(watchExpression, listener);
+    scope.$digest();
+
+    expect(watchExpression).toHaveBeenCalledWith(scope);
+  });
 });

@@ -100,6 +100,7 @@ export default class Scope {
    */
   $digest () {
     _.forEach(this.$$watchers, watcher => {
+      watcher.watchExpression(this);
       watcher.listener();
     });
   }
