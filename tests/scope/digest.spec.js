@@ -161,4 +161,24 @@ describe('Scope :: $digest', () => {
     scope.$digest();
     expect(watchExecutions).toBe(301);
   });
+
+  it('does not end $digest so that new watches are not run', () => {
+    scope.aValue  = 'abc';
+    scope.counter = 0;
+
+    scope.$watch(
+      scope => scope.aValue,
+      (newValue, oldValue, scope) => {
+        scope.$watch(
+          scope => scope.aValue,
+          (newValue, oldValue, scope) => {
+            scope.counter++;
+          }
+        );
+      }
+    );
+
+    scope.$digest();
+    expect(scope.counter).toBe(1);
+  });
 });
