@@ -115,4 +115,25 @@ describe('Scope :: $digest', () => {
     scope.$digest();
     expect(scope.initial).toBe('G.');
   });
+
+  it('gives up on the watches after 10 iterations', () => {
+    scope.counterA = 0;
+    scope.counterB = 0;
+
+    scope.$watch(
+      scope => scope.counterA,
+      (newValue, oldValue, scope) => {
+        scope.counterB++;
+      }
+    );
+
+    scope.$watch(
+      scope => scope.counterB,
+      (newValue, oldValue, scope) => {
+        scope.counterA++;
+      }
+    );
+
+    expect(() => { scope.$digest(); }).toThrow();
+  });
 });

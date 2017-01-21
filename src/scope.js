@@ -142,10 +142,15 @@ export default class Scope {
    * expect(scope.counter).toBe(2);
    */
   $digest () {
+    let TTL = 10;
     let dirty;
 
     do {
       dirty = this.$$digestOnce();
+
+      if (dirty && !(TTL--)) {
+        throw 'ngException: 10 $digest iterations reached.';
+      }
     } while (dirty);
   }
 }
