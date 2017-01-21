@@ -34,6 +34,15 @@ export default class Scope {
   }
 
   /**
+   * @name Scope#uniqueReference
+   * @function
+   * @description Function used to initialize the `last` attribute to something
+   *     we can guarantee to be unique, so that’s different from anything a
+   *     watch function might return, including `undefined`.
+   */
+  uniqueReference () {}
+
+  /**
    * @name Scope#$watch
    * @function
    * @description Registers a `listener` callback to be executed whenever the
@@ -67,7 +76,8 @@ export default class Scope {
   $watch (watchExpression, listener) {
     const watcher = {
       watchExpression,
-      listener
+      listener,
+      last: this.uniqueReference
     };
 
     this.$$watchers.push(watcher);

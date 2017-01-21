@@ -29,7 +29,7 @@ describe('Scope :: $digest', () => {
 
   it('calls the listener function when the watched value changes', () => {
     scope.someValue = 'a';
-    scope.counter = 0;
+    scope.counter   = 0;
 
     scope.$watch(
       scope => scope.someValue,
@@ -49,5 +49,17 @@ describe('Scope :: $digest', () => {
 
     scope.$digest();
     expect(scope.counter).toBe(2);
+  });
+
+  it('calls listener when watch value is first undefined', () => {
+    scope.counter = 0;
+
+    scope.$watch(
+      scope => scope.someValue,
+      (newValue, oldValue, scope) => { scope.counter++; }
+    );
+
+    scope.$digest();
+    expect(scope.counter).toBe(1);
   });
 });
