@@ -43,54 +43,29 @@ export default class Scope {
    */
   uuid () {}
 
+  /**
+   * @name Scope#$$areEqual
+   * @function
+   * @description Determines if two objects or two values are equivalent. Two
+   * objects or values are considered equivalent if at least one of the
+   * following is true:
+   *
+   * * Both objects or values pass `===` comparision.
+   * * Both objects or values are of the same type and all of their
+   *   properties are equal.
+   *
+   * @param {(Object|Array)} newValue - Object or value to compare.
+   * @param {(Object|Array)} oldValue - Object or value to compare.
+   * @param {Boolean} equality - Boolea flag to compare values in a deep way.
+   * @returns {Boolean} True if arguments are equal.
+   */
   $$areEqual (newValue, oldValue, equality) {
     if (equality)
       return _.isEqual(newValue, oldValue);
 
-    return newValue === oldValue;
-  }
-
-  /**
-   * @name Scope#$watch
-   * @function
-   * @description Registers a `listener` callback to be executed whenever the
-   *     `watchExpression` changes.
-   * @param {(string|function)} watchExpression - The `watchExpression` is called
-   *     on every call to `$digest()` and should return the value that will be
-   *     watched.
-   * @param {function} [listener] - The `listener` is called only when the value from
-   *     the current `watchExpression` and the previous call to `watchExpression`
-   *     are not equal.
-   *
-   * @example
-   * scope.someValue = 'a';
-   * scope.counter = 0;
-   *
-   * scope.$watch(
-   *   scope => scope.someValue,
-   *   (newValue, oldValue, scope) => { scope.counter++; }
-   * );
-   *
-   * expect(scope.counter).toBe(0);
-   *
-   * scope.$digest();
-   * expect(scope.counter).toBe(1);
-   *
-   * scope.someValue = 'b';
-   *
-   * scope.$digest();
-   * expect(scope.counter).toBe(2);
-   */
-  $watch (watchExpression, listener = () => {}, equality = false) {
-    const watcher = {
-      watchExpression,
-      listener,
-      equality,
-      last: this.uuid
-    };
-
-    this.$$watchers.push(watcher);
-    this.$$lastDirtyWatch = null;
+    return (newValue === oldValue) ||
+      (typeof newValue === 'number' && typeof oldValue === 'number' &&
+      isNaN(newValue) && isNaN(oldValue));
   }
 
   /**
@@ -127,6 +102,50 @@ export default class Scope {
     });
 
     return dirty;
+  }
+
+  /**
+   * @name Scope#$watch
+   * @function
+   * @description Registers a `listener` callback to be executed whenever the
+   *     `watchExpression` changes.
+   * @param {(string|function)} watchExpression - The `watchExpression` is called
+   *     on every call to `$digest()` and should return the value that will be
+   *     watched.
+   * @param {function} [listener] - The `listener` is called only when the value from
+   *     the current `watchExpression` and the previous call to `watchExpression`
+   *     are not equal.
+   * @param {Boolean} [equality] - When is `true`, value–based checking is used.
+   *
+   * @example
+   * scope.someValue = 'a';
+   * scope.counter = 0;
+   *
+   * scope.$watch(
+   *   scope => scope.someValue,
+   *   (newValue, oldValue, scope) => { scope.counter++; }
+   * );
+   *
+   * expect(scope.counter).toBe(0);
+   *
+   * scope.$digest();
+   * expect(scope.counter).toBe(1);
+   *
+   * scope.someValue = 'b';
+   *
+   * scope.$digest();
+   * expect(scope.counter).toBe(2);
+   */
+  $watch (watchExpression, listener = () => {}, equality = false) {
+    const watcher = {
+      watchExpression,
+      listener,
+      equality,
+      last: this.uuid
+    };
+
+    this.$$watchers.push(watcher);
+    this.$$lastDirtyWatch = null;
   }
 
   /**
