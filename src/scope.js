@@ -43,6 +43,13 @@ export default class Scope {
    */
   uuid () {}
 
+  $$areEqual (newValue, oldValue, equality) {
+    if (equality)
+      return _.isEqual(newValue, oldValue);
+
+    return newValue === oldValue;
+  }
+
   /**
    * @name Scope#$watch
    * @function
@@ -74,10 +81,11 @@ export default class Scope {
    * scope.$digest();
    * expect(scope.counter).toBe(2);
    */
-  $watch (watchExpression, listener = () => {}) {
+  $watch (watchExpression, listener = () => {}, equality = false) {
     const watcher = {
       watchExpression,
       listener,
+      equality,
       last: this.uuid
     };
 
@@ -105,9 +113,9 @@ export default class Scope {
       newValue = watcher.watchExpression(this);
       oldValue = watcher.last;
 
-      if (newValue !== oldValue) {
+      if (!this.$$areEqual(newValue, oldValue, watcher.equality)) {
         this.$$lastDirtyWatch = watcher;
-        watcher.last = newValue;
+        watcher.last = (watcher.equality ? _.cloneDeep(newValue) : newValue);
         watcher.listener(
           newValue,
           (oldValue === this.uuid ? newValue : oldValue),
