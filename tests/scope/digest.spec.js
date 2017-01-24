@@ -239,4 +239,25 @@ describe('Scope :: $digest', () => {
     scope.$digest();
     expect(scope.counter).toBe(1);
   });
+
+  it('catches exceptions in listener functions and continues', () => {
+    scope.aValue  = 'abc';
+    scope.counter = 0;
+
+    scope.$watch(
+      scope => scope.aValue,
+      (newValue, oldValue, scope) => {
+        throw 'Error';
+      }
+    );
+    scope.$watch(
+      scope => scope.aValue,
+      (newValue, oldValue, scope) => {
+        scope.counter++;
+      }
+    );
+
+    scope.$digest();
+    expect(scope.counter).toBe(1);
+  });
 });
